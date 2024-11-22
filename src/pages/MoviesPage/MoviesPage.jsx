@@ -1,14 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { searchMovies } from '../../components/tmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
 
+
 const MoviesPage = () => {
-  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+
+  const urlQuery = searchParams.get('query') || '';
+
+  useEffect(() => {
+    if (!location.state?.fromSearch) {
+      setQuery('');
+    }
+
+    if (urlQuery) {
+      searchMovies(urlQuery).then(setMovies);
+    }
+  }, [urlQuery, location.state]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    searchMovies(query).then(setMovies);
+    const searchQuery = e.target.elements.query.value.trim();
+    if (!searchQuery) return;
+
+    setSearchParams({ query: searchQuery });
+    setQuery(searchQuery);
+    searchMovies(searchQuery).then(setMovies);
   };
 
   return (
@@ -16,6 +37,7 @@ const MoviesPage = () => {
       <form onSubmit={handleSearch}>
         <input
           type="text"
+          name="query"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search movies..."
@@ -28,3 +50,4 @@ const MoviesPage = () => {
 };
 
 export default MoviesPage;
+
