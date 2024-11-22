@@ -1,20 +1,14 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import App from "./components/App";
-import "modern-normalize";
-import "./index.css";
+import 'modern-normalize';
+import './index.css';
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 2000,
-        }}
-      />
+    <App />
     </BrowserRouter>
   </React.StrictMode>
 );
