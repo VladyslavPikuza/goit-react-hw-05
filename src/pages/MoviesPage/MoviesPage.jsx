@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { searchMovies } from '../../components/tmdbApi';
 import MovieList from '../../components/MovieList/MovieList';
+import s from './MoviesPage.module.css';
 
 
 const MoviesPage = () => {
@@ -36,13 +37,14 @@ const MoviesPage = () => {
     <div>
       <form onSubmit={handleSearch}>
         <input
+          className={s.input}
           type="text"
           name="query"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search movies..."
         />
-        <button type="submit">Search</button>
+        <button className={s.button} type="submit">Search</button>
       </form>
       <MovieList movies={movies} />
     </div>
