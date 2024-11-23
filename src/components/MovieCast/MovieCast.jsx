@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCast, getImageUrl } from '../tmdbApi';
 
+
 const MovieCast = () => {
   const { movieId } = useParams(); 
   const [cast, setCast] = useState([]);
